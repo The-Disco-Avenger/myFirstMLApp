@@ -16,10 +16,37 @@ namespace MyMLApp
         public class ModelInput
         {
             [ColumnName(@"col0")]
-            public string Col0 { get; set; }
+            public float Col0 { get; set; }
 
             [ColumnName(@"col1")]
-            public float Col1 { get; set; }
+            public string Col1 { get; set; }
+
+            [ColumnName(@"col2")]
+            public string Col2 { get; set; }
+
+            [ColumnName(@"col3")]
+            public string Col3 { get; set; }
+
+            [ColumnName(@"col4")]
+            public string Col4 { get; set; }
+
+            [ColumnName(@"col5")]
+            public string Col5 { get; set; }
+
+            [ColumnName(@"col6")]
+            public string Col6 { get; set; }
+
+            [ColumnName(@"col7")]
+            public string Col7 { get; set; }
+
+            [ColumnName(@"col8")]
+            public string Col8 { get; set; }
+
+            [ColumnName(@"col9")]
+            public float Col9 { get; set; }
+
+            [ColumnName(@"col10")]
+            public float Col10 { get; set; }
 
         }
 
@@ -31,12 +58,8 @@ namespace MyMLApp
         #region model output class
         public class ModelOutput
         {
-            [ColumnName("PredictedLabel")]
-            public float Prediction { get; set; }
-
-            public float[] Score { get; set; }
+            public float Score { get; set; }
         }
-
         #endregion
 
         private static string MLNetModelPath = Path.GetFullPath("SentimentModel.zip");

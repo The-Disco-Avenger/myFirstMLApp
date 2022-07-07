@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ML.Data;
+using Microsoft.ML.Trainers.FastTree;
 using Microsoft.ML.Trainers;
 using Microsoft.ML;
 
@@ -28,12 +29,18 @@ namespace MyMLApp
         public static IEstimator<ITransformer> BuildPipeline(MLContext mlContext)
         {
             // Data process configuration with pipeline data transformations
-            var pipeline = mlContext.Transforms.Text.FeaturizeText(@"col0", @"col0")      
-                                    .Append(mlContext.Transforms.Concatenate(@"Features", @"col0"))      
-                                    .Append(mlContext.Transforms.Conversion.MapValueToKey(@"col1", @"col1"))      
+            var pipeline = mlContext.Transforms.ReplaceMissingValues(new []{new InputOutputColumnPair(@"col9", @"col9"),new InputOutputColumnPair(@"col10", @"col10")})      
+                                    .Append(mlContext.Transforms.Text.FeaturizeText(@"col1", @"col1"))      
+                                    .Append(mlContext.Transforms.Text.FeaturizeText(@"col2", @"col2"))      
+                                    .Append(mlContext.Transforms.Text.FeaturizeText(@"col3", @"col3"))      
+                                    .Append(mlContext.Transforms.Text.FeaturizeText(@"col4", @"col4"))      
+                                    .Append(mlContext.Transforms.Text.FeaturizeText(@"col5", @"col5"))      
+                                    .Append(mlContext.Transforms.Text.FeaturizeText(@"col6", @"col6"))      
+                                    .Append(mlContext.Transforms.Text.FeaturizeText(@"col7", @"col7"))      
+                                    .Append(mlContext.Transforms.Text.FeaturizeText(@"col8", @"col8"))      
+                                    .Append(mlContext.Transforms.Concatenate(@"Features", new []{@"col9",@"col10",@"col1",@"col2",@"col3",@"col4",@"col5",@"col6",@"col7",@"col8"}))      
                                     .Append(mlContext.Transforms.NormalizeMinMax(@"Features", @"Features"))      
-                                    .Append(mlContext.MulticlassClassification.Trainers.LbfgsMaximumEntropy(l1Regularization:0.0441691127020734F,l2Regularization:0.03125F,labelColumnName:@"col1",featureColumnName:@"Features"))      
-                                    .Append(mlContext.Transforms.Conversion.MapKeyToValue(@"PredictedLabel", @"PredictedLabel"));
+                                    .Append(mlContext.Regression.Trainers.FastTreeTweedie(new FastTreeTweedieTrainer.Options(){NumberOfLeaves=436,MinimumExampleCountPerLeaf=38,NumberOfTrees=32768,MaximumBinCountPerFeature=8,LearningRate=0.000115793030171978F,FeatureFraction=0.99938971341716F,LabelColumnName=@"col0",FeatureColumnName=@"Features"}));
 
             return pipeline;
         }

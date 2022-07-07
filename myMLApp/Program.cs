@@ -5,17 +5,16 @@ bool isContinue = true;
 do
 {
 
-    Console.WriteLine("Please enter a sample review");
-    var sampleData = new SentimentModel.ModelInput()
+    Console.WriteLine("Please enter the Moves First Address then second address.");
+    var TestMove = new SentimentModel.ModelInput()
     {
-        Col0 = Console.ReadLine() ?? "I loved it"
+        Col1 = Console.ReadLine() ?? "419 east park st lapeer MI 48446",
+        Col2 = Console.ReadLine() ?? "6837 northlake rd otterlake MI 48404"
     };
     // Load model and predict output of sample data
-    var result = SentimentModel.Predict(sampleData);
+    var result = SentimentModel.Predict(TestMove);
 
-    // If Prediction is 1, sentiment is "Positive"; otherwise, sentiment is "Negative"
-    var sentiment = result.Prediction == 1 ? "Positive" : "Negative";
-    Console.WriteLine($"Text: {sampleData.Col0}\nSentiment: {sentiment}");
+    Console.WriteLine($"Prediction Score: {result.Score}\nPredicted Price: {result.Prediction}\nFrom Address: {TestMove.Col1}\nTo Address: {TestMove.Col2}");
     Console.WriteLine("----------------------------");
     Console.WriteLine("Would you like to try another review?");
     bool isAccurateAnswer = false;
